@@ -2,8 +2,6 @@ use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
-// The output is wrapped in a Result to allow matching on errors
-// Returns an Iterator to the Reader of the lines of the file.
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
 where P: AsRef<Path>, {
     let file = File::open(filename)?;
@@ -37,25 +35,17 @@ fn main()
             let ch = val.chars().nth(0).unwrap();
 
             if ch == 'f' {
-                let tmpch: char = val.chars().nth(8).unwrap();
-                let mut tmp: u32 = tmpch.to_digit(10).unwrap();
-                forward = forward + tmp;
+                forward = forward + val.chars().nth(8).unwrap().to_digit(10).unwrap();
             } else if ch == 'd' {
-                let tmpch: char = val.chars().nth(5).unwrap();
-                let mut tmp: u32 = tmpch.to_digit(10).unwrap();
-                depth = depth + tmp;
+                depth = depth + val.chars().nth(5).unwrap().to_digit(10).unwrap();
             } else if ch == 'u' {
-                let tmpch: char = val.chars().nth(3).unwrap();
-                let mut tmp: u32 = tmpch.to_digit(10).unwrap();
-                depth = depth - tmp;
+                depth = depth - val.chars().nth(3).unwrap().to_digit(10).unwrap();
             }
-
-            //let aaa: i32 = v[i].parse().unwrap();
         }
 
         //day02 1
         result = depth * forward;
-        let mut _gnarf: bool = true;
+        println! ("Res day02 1: {}", result);
 
         //day02 2
         depth = 0;
@@ -69,28 +59,19 @@ fn main()
             let ch = valround2.chars().nth(0).unwrap();
 
             if ch == 'f' {
-                let tmpch: char = valround2.chars().nth(8).unwrap();
-                let mut tmp: u32 = tmpch.to_digit(10).unwrap();
+                let mut tmp: u32 = valround2.chars().nth(8).unwrap().to_digit(10).unwrap();
                 forward = forward + tmp;
                 depth = depth + (aim * tmp);
             } else if ch == 'd' {
-                let tmpch: char = valround2.chars().nth(5).unwrap();
-                let mut tmp: u32 = tmpch.to_digit(10).unwrap();
-                aim = aim + tmp;
+                aim = aim + valround2.chars().nth(5).unwrap().to_digit(10).unwrap();
             } else if ch == 'u' {
-                let tmpch: char = valround2.chars().nth(3).unwrap();
-                let mut tmp: u32 = tmpch.to_digit(10).unwrap();
-                aim = aim - tmp;
+                aim = aim - valround2.chars().nth(3).unwrap().to_digit(10).unwrap();
             }
         }
 
        result = depth * forward;
-       _gnarf = true;
-
-
+       println! ("Res day02 2: {}", result);
     } else {
         println! ("Eingabe-Datei kann nicht geöffnet werden");
     }
 }
-
-
